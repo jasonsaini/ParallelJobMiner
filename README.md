@@ -1,10 +1,10 @@
 # Parallel Web Scraper
 ###  By:
-###   Joshua ByrdJason
-###   Jason Saini
-###   David Santamaria
-###   Brendan Smith
-###   Parker Waler
+#####   Joshua ByrdJason
+#####   Jason Saini
+#####   David Santamaria
+#####   Brendan Smith
+#####   Parker Waller  
 
 ## __Description:__
 A web scraper that searches for your desired job position from:
