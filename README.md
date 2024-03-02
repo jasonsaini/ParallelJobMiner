@@ -1,6 +1,6 @@
 # Parallel Web Scraper
 ###  By:
-#####   Joshua ByrdJason
+#####   Joshua Byrd
 #####   Jason Saini
 #####   David Santamaria
 #####   Brendan Smith
@@ -12,7 +12,8 @@ A web scraper that searches for your desired job position from:
 * Indeed
 * LinkedIn
 * Monster
-* USAJOBS
+* USAJOBS  
+
 It returns information about all of the available listings and how
 many positions are listed.
 
