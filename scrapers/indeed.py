@@ -1,18 +1,11 @@
 from bs4 import BeautifulSoup
 import requests
 
-job_list = {}
-job = {}
-
-HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-    'Connection': 'keep-alive',
-    'Accept-Language': 'en-US,en;q=0.9,lt;q=0.8,et;q=0.7,de;q=0.6',
-}
+from .utils import HEADERS, Job
 
 def scrape_indeed(job_title: str):
+    job_list = []
+
     # Change to how Indeed formats job titles for uri
     job_title = job_title.replace(' ', '+')
 
@@ -28,29 +21,55 @@ def scrape_indeed(job_title: str):
     data = res_text.find('ul', {'class': 'css-zu9cdh'})
     listings = data.find_all('div', {'class': 'cardOutline'})
 
-    for i in range(0, len(listings)):
+    for listing in listings:
+        job = Job()
+
         # Company name
         try:
-            job["name-of-the-company"] = listings[i].find("div",{"class":"companyInfo"}).find("span",{"class":"companyName"}).text
+            job.name_of_company = (
+                listing
+                .find('div', {'class': 'companyInfo'})
+                .find('span', {'class':'companyName'})
+                .text
+                .strip()
+            )
         except:
-            job["name-of-the-company"] = None
+            job.name_of_company = None
 
         # Rating
         try:
-            job["rating"] = listings[i].find("div",{"class":"companyInfo"}).find("span",{"class":"ratingsDisplay"}).text
+            job.rating = (
+                listing
+                .find('div', {'class': 'companyInfo'})
+                .find('span', {'class': 'ratingsDisplay'})
+                .text
+                .strip()
+            )
         except:
-            job["rating"] = None
+            job.rating = None
 
         # Salary
         try:
-             job["salary"] = listings[i].find("div",{"class":"salary-snippet-container"}).text
-        except:            
-             job["salary"] = None
-
-        try:
-            job["job-details"] = listings[i].find("div",{"class":"metadata taxoAttributes-container"}).find("ul").text
+            job.salary = (
+                listing
+                .find('div', {'class': 'salary-snippet-container'})
+                .text
+                .strip()
+            )
         except:
-            job["job-details"] = None
+            job.salary = None
+
+        # Job details
+        try:
+            job.job_details = (
+                listing
+                .find('div', {'class': 'metadata taxoAttributes-container'})
+                .find('ul')
+                .text
+                .strip()
+            )
+        except:
+            job.job_details = None
         
         # Add job to list
         job_list.append(job)
