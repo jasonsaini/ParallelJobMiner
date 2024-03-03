@@ -58,4 +58,4 @@ def scrape_monster(job_title):
         # Add job to list
         job_list.append(job)
 
-    print(f'List of jobs and their details: {job_list}')
+    print(f'List of jobs and their details for Monster: {job_list}')
