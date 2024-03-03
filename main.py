@@ -1,38 +1,11 @@
-from bs4 import BeautifulSoup
 import multiprocessing as mp, time
 import argparse
-import requests
 
-
-def scrape_usajobs(job_title):
-    uri = "https://usajobs.gov/"
-    page = requests.get(uri)
-    print(f'usa: {job_title}')
-
-def scrape_indeed(job_title):
-    # Change to how Indeed formats urls
-    job_title = job_title.replace(' ', '+')
-    uri = "https://indeed.com/"
-    page = requests.get(uri)
-    print(f'indeed: {job_title}')
-
-def scrape_linkedin(job_title):
-    uri = "https://linkedin.com/"
-    page = requests.get(uri)
-    print(f'linkedin: {job_title}')
-
-
-def scrape_monster(job_title):
-    uri = "https://monster.com/"
-    page = requests.get(uri)
-    print(f'monster: {job_title}')
-
-
-def scrape_glassdoor(job_title):
-    uri = "https://glassdoor.com/Job/index.htm"
-    page = requests.get(uri)
-    print(f'glassdoor: {job_title}')
-
+from scrapers import scrape_glassdoor
+from scrapers import scrape_indeed
+from scrapers import scrape_linkedin
+from scrapers import scrape_monster
+from scrapers import scrape_usajobs
 
 # Starts the threads for scraping the sites
 def start_scrapers(job_title):
@@ -54,7 +27,6 @@ def start_scrapers(job_title):
 
     for thread in threads:
         thread.join()
-
 
 # Gets job title
 def get_job():
