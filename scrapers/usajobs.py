@@ -7,12 +7,6 @@ from dotenv import load_dotenv
 load_dotenv('token.env')
 api_key = os.getenv('USAJOBS_KEY')
 
-# Manually read and print the contents of token.env
-with open('token.env') as file:
-    for line in file:
-        print(line.strip())
-
-
 def scrape_usajobs(job_title, api_key):
     base_url = "https://data.usajobs.gov/api/search"
     headers = {
