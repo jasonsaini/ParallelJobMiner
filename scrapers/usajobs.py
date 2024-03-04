@@ -14,7 +14,8 @@ def scrape_usajobs(job_title, api_key):
         "Authorization-Key": api_key
     }
     params = {
-        "Keyword": job_title
+        "Keyword": job_title,
+        "Series": "1550,2210"
     }
 
     response = requests.get(base_url, headers=headers, params=params)
