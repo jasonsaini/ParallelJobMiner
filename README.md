@@ -24,5 +24,5 @@ Run the following commands:
 ```
 $ git clone https://github.com/jasonsaini/ParallelJobMiner.git
 $ pip install -r requirements.txt
-$ python3 main.py
+$ python3 main.py "Job Title"   (ex: python3 main.py "software engineer")
 ```
