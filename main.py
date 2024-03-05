@@ -1,14 +1,16 @@
+import multiprocessing
 import multiprocessing as mp, time
 import argparse
 import threading
 import pandas as pd
 import os
-
+from scrapers import scrape_usajobs
+import requests
+from dotenv import load_dotenv
 from scrapers import scrape_glassdoor
 from scrapers import scrape_indeed
 from scrapers import scrape_linkedin
 from scrapers import scrape_monster
-from scrapers import scrape_usajobs
 
 
 # Starts the threads for scraping the sites
@@ -22,7 +24,7 @@ def start_scrapers(job_title, data_frame):
     }
 
     threads = [
-        mp.Process(target=scrapers[site], args=(job_title, data_frame))
+        threading.Thread(target=scrapers[site], args=(job_title, data_frame))
         for site in scrapers
     ]
 
@@ -47,7 +49,7 @@ class ThreadSafeDataframe:
 
     def __init__(self):
         self.lock = threading.Lock()
-        self.index = 1
+        self.index = 0
         self.df = pd.DataFrame(columns=self.excel_header)
 
     def print_df(self):
@@ -59,8 +61,6 @@ class ThreadSafeDataframe:
             return self.index
 
     def convert_df_to_excel(self):
-        print(self.df)
-        print(self.index)
         exists = os.path.isfile('./jobs_output.xlsx')
         if exists:
             writer = pd.ExcelWriter('jobs_output.xlsx', mode='a', if_sheet_exists='replace')
@@ -78,11 +78,10 @@ if __name__ == "__main__":
     job_title = get_job()
 
     print(f'Searching for {job_title} on various job sites...')
+    data_frame = ThreadSafeDataframe()
 
     start_time = time.time()
 
-    data_frame = ThreadSafeDataframe()
-    print(hex(id(data_frame)))
     start_scrapers(job_title, data_frame)
     data_frame.convert_df_to_excel()
 

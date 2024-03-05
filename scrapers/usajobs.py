@@ -9,7 +9,6 @@ api_key = os.getenv('USAJOBS_KEY')
 
 
 def scrape_usajobs(job_title, data_frame):
-    print(hex(id(data_frame)))
     base_url = "https://data.usajobs.gov/api/search"
     headers = {
         "User-Agent": "your_email@example.com",  # Replace with your email
@@ -36,6 +35,3 @@ def scrape_usajobs(job_title, data_frame):
         index = data_frame.get_and_increment_index()
         new_row = ['USAJobs', job_title, company_name, job_link]
         data_frame.add_new_row(new_row, index)
-        # print(f"Job Title: {job_title}\nCompany: {company_name}\nLink: {job_link}\n")
-    print(f'Finished Dataframe: {data_frame.df}')
-    return
