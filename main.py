@@ -2,9 +2,7 @@ import time
 import argparse
 import threading
 import pandas as pd
-import os
 from scrapers import scrape_usajobs
-import requests
 from dotenv import load_dotenv
 from scrapers import scrape_glassdoor
 from scrapers import scrape_indeed
@@ -60,16 +58,18 @@ class ThreadSafeDataframe:
             return self.index
 
     def convert_df_to_excel(self):
-        exists = os.path.isfile('./jobs_output.xlsx')
-        if exists:
-            writer = pd.ExcelWriter('jobs_output.xlsx', mode='a', if_sheet_exists='replace')
-        else:
-            writer = pd.ExcelWriter('jobs_output.xlsx')
+        # Create Excel sheet writer
+        writer = pd.ExcelWriter('jobs_output.xlsx', engine='xlsxwriter')
         self.df.to_excel(writer, sheet_name='jobs_list')
+        # Dynamically adjust column width
+        for column in self.df:
+            column_length = max(self.df[column].astype(str).map(len).max(), len(column))
+            col_idx = self.df.columns.get_loc(column) + 1
+            writer.sheets['jobs_list'].set_column(col_idx, col_idx, column_length)
+        # Save Excel sheet
         writer.close()
 
     def add_new_row(self, new_row, index):
-        print(f'{index}: {new_row}')
         self.df.loc[index] = new_row
 
 
