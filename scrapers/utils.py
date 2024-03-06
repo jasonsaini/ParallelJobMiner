@@ -8,18 +8,8 @@ HEADERS = {
 
 class Job:
     def __init__(self):
-        self.name_of_company: str = None
-        self.position: str = None
-        self.rating: str = None
-        self.salary: str = None
-        self.details: str = None
-
-    def print_jobs(job_list):
-        for job in job_list:
-            print('Company: {}\nPosition: {}\nRating: {}\nSalary: {}\nDetails: {}\n\n'.format(
-                job.name_of_company,
-                job.position,
-                job.rating,
-                job.salary,
-                job.details
-            ))
+        self.company: str = None
+        self.title: str = None
+        self.location: str = None
+        self.link: str = None
+        self.apply_date: str = None

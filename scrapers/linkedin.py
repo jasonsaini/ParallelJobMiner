@@ -29,8 +29,10 @@ def scrape_linkedin(job_title: str):
 
     for job_details in job_objects:
         job = Job()
-        job.name_of_company = job_details.get('normalized_company_name')
-        job.position = job_details.get('job_title')
+        job.company = job_details.get('normalized_company_name')
+        job.title = job_details.get('job_title')
+        job.location = job_details.get('job_location')
+        job.link = job_details.get('linkedin_job_url_cleaned')
 
         job_list.append(job)
 
