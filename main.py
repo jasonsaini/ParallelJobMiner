@@ -1,24 +1,27 @@
-import multiprocessing as mp, time
+import time
 import argparse
-
+import threading
+import pandas as pd
+from scrapers import scrape_usajobs
+from dotenv import load_dotenv
 from scrapers import scrape_glassdoor
 from scrapers import scrape_indeed
 from scrapers import scrape_linkedin
 from scrapers import scrape_monster
-from scrapers import scrape_usajobs
+
 
 # Starts the threads for scraping the sites
-def start_scrapers(job_title):
+def start_scrapers(job_title, data_frame):
     scrapers = {
-        'usajobs': scrape_usajobs,
-        'indeed': scrape_indeed,
-        'linkedin': scrape_linkedin,
-        'monster': scrape_monster,
-        'glassdoor': scrape_glassdoor,
+        'usajobs': scrape_usajobs
+        # 'indeed': scrape_indeed,
+        # 'linkedin': scrape_linkedin,
+        # 'monster': scrape_monster,
+        # 'glassdoor': scrape_glassdoor,
     }
 
     threads = [
-        mp.Process(target=scrapers[site], args=(job_title,))
+        threading.Thread(target=scrapers[site], args=(job_title, data_frame))
         for site in scrapers
     ]
 
@@ -27,6 +30,7 @@ def start_scrapers(job_title):
 
     for thread in threads:
         thread.join()
+
 
 # Gets job title
 def get_job():
@@ -37,14 +41,48 @@ def get_job():
     return args.job_title
 
 
+class ThreadSafeDataframe:
+    excel_header = ["Site", "Job Title", "Company", "Link"]
+
+    def __init__(self):
+        self.lock = threading.Lock()
+        self.index = 0
+        self.df = pd.DataFrame(columns=self.excel_header)
+
+    def print_df(self):
+        print(self.df)
+
+    def get_and_increment_index(self):
+        with self.lock:
+            self.index += 1
+            return self.index
+
+    def convert_df_to_excel(self):
+        # Create Excel sheet writer
+        writer = pd.ExcelWriter('jobs_output.xlsx', engine='xlsxwriter')
+        self.df.to_excel(writer, sheet_name='jobs_list')
+        # Dynamically adjust column width
+        for column in self.df:
+            column_length = max(self.df[column].astype(str).map(len).max(), len(column))
+            col_idx = self.df.columns.get_loc(column) + 1
+            writer.sheets['jobs_list'].set_column(col_idx, col_idx, column_length)
+        # Save Excel sheet
+        writer.close()
+
+    def add_new_row(self, new_row, index):
+        self.df.loc[index] = new_row
+
+
 if __name__ == "__main__":
     job_title = get_job()
 
     print(f'Searching for {job_title} on various job sites...')
+    data_frame = ThreadSafeDataframe()
 
     start_time = time.time()
 
-    start_scrapers(job_title)
+    start_scrapers(job_title, data_frame)
+    data_frame.convert_df_to_excel()
 
     elapsed_time = time.time() - start_time
     print(f'Search complete in {elapsed_time:.2f} seconds')
