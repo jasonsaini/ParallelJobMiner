@@ -12,6 +12,7 @@ from scrapers import scrape_glassdoor
 from scrapers import scrape_indeed
 from scrapers import scrape_linkedin
 from scrapers import scrape_monster
+from scrapers import scrape_github
 
 
 # Starts the threads for scraping the sites
@@ -22,6 +23,7 @@ def start_scrapers(job_title, data_frame):
         # 'linkedin': scrape_linkedin,
         # 'monster': scrape_monster,
         # 'glassdoor': scrape_glassdoor,
+        'github': scrape_github,
     }
 
     threads = [
