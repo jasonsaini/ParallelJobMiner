@@ -1,5 +1,5 @@
 # Parallel Job Miner 🌐✨
-### By: Joshua Byrd, Jason Saini, David Santamaria, Brendan Smith, Parker Waller  
+### By: Joshua Byrd, Jason Saini, Brendan Smith, Parker Waller,  David Santamaria
 
 ---
 
