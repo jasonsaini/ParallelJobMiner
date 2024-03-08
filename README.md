@@ -56,5 +56,5 @@ $ python3 main.py "Job Title"   (ex: python3 main.py "software engineer")
 
 ---
 
-## 🌈 Contribute
+## 🤝 Contribute
 Join our mission in making job hunting a breeze. Your ideas and contributions are welcome!
