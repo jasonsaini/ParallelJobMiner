@@ -27,7 +27,6 @@ def scrape_usajobs(job_title, data_frame):
 
     data = response.json()
     job_listings = data.get('SearchResult', {}).get('SearchResultItems', [])
-    print("USAJOBS Listings:")
     for job in job_listings:
         job_title = job['MatchedObjectDescriptor']['PositionTitle']
         company_name = job['MatchedObjectDescriptor']['OrganizationName']

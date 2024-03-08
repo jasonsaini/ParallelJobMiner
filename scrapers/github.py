@@ -33,7 +33,7 @@ def scrape_github(job_title, data_frame):
                         # location = columns[2].text.strip()
                         link = link_tag['href']
                         # apply_date = columns[4].text.strip()
-                        print(f'Company: {company}\nTitle: {title}\nLink: {link}')
+                        # print(f'Company: {company}\nTitle: {title}\nLink: {link}')
 
                         # Append data to the data frame
                         index = data_frame.get_and_increment_index()

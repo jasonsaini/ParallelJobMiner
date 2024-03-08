@@ -18,12 +18,12 @@ from scrapers import scrape_github
 # Starts the threads for scraping the sites
 def start_scrapers(job_title, data_frame):
     scrapers = {
-        # scrape_usajobs
+        scrape_usajobs,
         # scrape_indeed,
         # scrape_linkedin,
         # scrape_monster,
         # scrape_glassdoor,
-        # scrape_github,
+        scrape_github
     }
 
     for scraper in scrapers:
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     start_time = time.time()
 
     start_scrapers(job_title, data_frame)
-    data_frame.convert_df_to_excel()
+    data_frame.convert_df_to_excel('jobs_output_sequential.xlsx')
 
     elapsed_time = time.time() - start_time
     print(f'Search complete in {elapsed_time:.2f} seconds')
