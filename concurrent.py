@@ -21,7 +21,7 @@ def start_scrapers(job_title, data_frame):
         'github': scrape_github,
         'usajobs': scrape_usajobs,
         # 'indeed': scrape_indeed,
-        # 'linkedin': scrape_linkedin,
+        #'linkedin': scrape_linkedin,
         # 'monster': scrape_monster,
         # 'glassdoor': scrape_glassdoor,
     }
@@ -47,4 +47,4 @@ if __name__ == "__main__":
     data_frame.convert_df_to_excel('jobs_output.xlsx')
 
     elapsed_time = time.time() - start_time
-    print(f'Search complete in {elapsed_time:.2f} seconds')
+    print(f'Concurrent Search complete in {elapsed_time:.2f} seconds')

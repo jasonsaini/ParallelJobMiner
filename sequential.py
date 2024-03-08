@@ -40,4 +40,4 @@ if __name__ == "__main__":
     data_frame.convert_df_to_excel('jobs_output_sequential.xlsx')
 
     elapsed_time = time.time() - start_time
-    print(f'Search complete in {elapsed_time:.2f} seconds')
+    print(f'Sequential search complete in {elapsed_time:.2f} seconds')
