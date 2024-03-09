@@ -21,10 +21,10 @@ Ensure you have python3.
 
 Clone and set up with ease:
 ```
-$ git clone https://github.com/jasonsaini/ParallelJobMiner.git
-$ cd /ParallelJobMiner
-$ pip install -r requirements.txt
-$ python3 main.py "Job Title"   (ex: python3 main.py "software engineer")
+git clone https://github.com/jasonsaini/ParallelJobMiner.git
+cd /ParallelJobMiner
+pip install -r requirements.txt
+python3 main.py "Job Title"   (ex: python3 main.py "software engineer")
 ```
 
 ---
