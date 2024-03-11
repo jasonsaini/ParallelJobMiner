@@ -25,7 +25,6 @@ def scrape_linkedin(job_title: str, data_frame):
     response = requests.post(url, json=payload, headers=headers)
 
     job_objects = response.json()
-    print("LinkedIn Listings:")
     for job_details in job_objects:
         job = Job()
         job.company = job_details.get('normalized_company_name')
