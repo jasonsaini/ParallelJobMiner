@@ -1,77 +1,35 @@
-from bs4 import BeautifulSoup
 import requests
+import os
+from dotenv import load_dotenv
+from .utils import Job
 
-from .utils import HEADERS, Job
+load_dotenv('token.env')
+api_key = os.getenv('INDEED_KEY')
 
-def scrape_indeed(job_title: str):
-    job_list = []
+def scrape_indeed(job_title, data_frame):
+    url = "https://indeed11.p.rapidapi.com/"
 
-    # Change to how Indeed formats job titles for uri
-    job_title = job_title.replace(' ', '+')
+    payload = {
+            "search_terms": job_title,
+            "location": "United States",
+            "page": "1"
+    }
+    headers = {
+            "content-type": "application/json",
+            "X-RapidAPI-Key": api_key,
+            "X-RapidAPI-Host": "indeed11.p.rapidapi.com"
+    }
 
-    uri = 'https://www.indeed.com/jobs?q={}&l=United+States'.format(job_title)
+    response = requests.post(url, json=payload, headers=headers)
 
-    res = requests.get(uri, headers=HEADERS)
-    if res.status_code == 403:
-        print('Indeed: Denied. Counted as a bot')
-        return
-
-    # Get the listings
-    res_text = BeautifulSoup(res.text, 'html.parser')
-    data = res_text.find('ul', {'class': 'css-zu9cdh'})
-    listings = data.find_all('div', {'class': 'cardOutline'})
-
-    for listing in listings:
+    job_objects = response.json()
+    for job_details in job_objects:
         job = Job()
+        job.company = job_details.get('company_name')
+        job.title = job_details.get('job_title')
+        job.location = job_details.get('location')
+        job.link = job_details.get('url')
+        index = data_frame.get_and_increment_index()
+        new_row = ['Indeed', job.title, job.company, job.link]
+        data_frame.add_new_row(new_row, index)
 
-        # Company name
-        try:
-            job.name_of_company = (
-                listing
-                .find('div', {'class': 'companyInfo'})
-                .find('span', {'class':'companyName'})
-                .text
-                .strip()
-            )
-        except:
-            job.name_of_company = None
-
-        # Rating
-        try:
-            job.rating = (
-                listing
-                .find('div', {'class': 'companyInfo'})
-                .find('span', {'class': 'ratingsDisplay'})
-                .text
-                .strip()
-            )
-        except:
-            job.rating = None
-
-        # Salary
-        try:
-            job.salary = (
-                listing
-                .find('div', {'class': 'salary-snippet-container'})
-                .text
-                .strip()
-            )
-        except:
-            job.salary = None
-
-        # Job details
-        try:
-            job.job_details = (
-                listing
-                .find('div', {'class': 'metadata taxoAttributes-container'})
-                .find('ul')
-                .text
-                .strip()
-            )
-        except:
-            job.job_details = None
-        
-        # Add job to list
-        job_list.append(job)
-
-    print(f'List of jobs and their details for Indeed: {job_list}')
