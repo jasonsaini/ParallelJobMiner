@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from .utils import Job
 
 load_dotenv('token.env')
-api_key = os.getenv('LINKEDIN_KEY')
+api_key = os.getenv('GLASSDOOR_KEY')
 
 def scrape_glassdoor(job_title: str, data_frame):
     url = "https://glassdoor.p.rapidapi.com/jobs/search"
