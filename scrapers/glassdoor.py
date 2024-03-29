@@ -1,80 +1,35 @@
-from bs4 import BeautifulSoup
 import requests
 
-from .utils import HEADERS, Job
+from .utils import Job
 
-listing_info = {
-    'ul_class': 'JobsList_jobsList__lqjTr',
-    'div_class': 'jobCard JobCard_jobCardContent__X81Ew'
-}
+def scrape_glassdoor(job_title: str, data_frame):
+    url = "https://glassdoor.p.rapidapi.com/jobs/search"
 
-company_info = {
-    'name_class': 'EmployerProfile_employerInfo__d8uSE EmployerProfile_employerWithLogo__E_JPs',
-    'name_span': 'EmployerProfile_employerName__qujuA'
-}
+    query_string = {"keyword":job_title, "location_id":"1", "location_type":"N"}
 
-salary_info = {
-    'div_class': 'JobCard_salaryEstimate__arV5J'
-}
+    headers = {
+        "X-RapidAPI-Key": "1a706ff713mshe4faa06bd345bdep11a22ejsn6107b481efa1",
+        "X-RapidAPI-Host": "glassdoor.p.rapidapi.com"
+    }
 
-job_details = {
-    'div_class': 'JobCard_jobDescriptionSnippet__yWW8q'
-}
+    response = requests.get(url, headers=headers, params=query_string)
 
-def scrape_glassdoor(job_title: str):
-    job_title = job_title.replace(' ', '-')
+    job_objects = response.json()
 
-    uri = 'https://www.glassdoor.com/Job/united-states-{}'.format(job_title)
+    jobs = job_objects.get('hits')
 
-    res = requests.get(uri, headers=HEADERS)
-    if res.status_code == 403:
-        print('Glassdoor: Denied. Counted as a bot')
-        return
+    print(jobs)
 
-    # Get the listings
-    res_text = BeautifulSoup(res.text, 'html.parser')
-    data = res_text.find('ul', {'class': listing_info['ul_class']})
-    listings = data.find_all('div', {'class': listing_info['div_class']})
-
-    job_list = []
-
-    for listing in listings:
+    for job_details in jobs:
         job = Job()
 
-        # Company name
-        try:
-            job.name_of_company = (
-                listing
-                .find('div', {'class': company_info['name_class']})
-                .find('span', {'class': company_info['name_span']})
-                .text
-                .strip()
-            )
-        except:
-            job.name_of_company = None
+        job.title = job_details.get('job_title')
 
-        # Salary
-        try:
-            job.salary = (
-                listing
-                .find('div', {'class': salary_info['div_class']})
-                .text
-                .strip()
-            )
-        except:            
-            job.salary = None
+        company_info = job_details.get('company')
+        job.company = '' if company_info is None else company_info.get('name')
 
-        try:
-            job.details = (
-                listing
-                .find('div', {'class': job_details['div_class']})
-                .text
-                .strip()
-            )
-        except:
-            job.details = None
-        
-        # Add job to list
-        job_list.append(job)
+        job.link = 'glassdoor.com/Job' + job_details.get('link')[4:]
 
-    print(f'List of jobs and their details for Glassdoor: {job_list}')
+        index = data_frame.get_and_increment_index()
+        new_row = ['Glassdoor', job.title, job.company, job.link]
+        data_frame.add_new_row(new_row, index)
