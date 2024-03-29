@@ -1,6 +1,11 @@
 import requests
+import os
+from dotenv import load_dotenv
 
 from .utils import Job
+
+load_dotenv('token.env')
+api_key = os.getenv('LINKEDIN_KEY')
 
 def scrape_glassdoor(job_title: str, data_frame):
     url = "https://glassdoor.p.rapidapi.com/jobs/search"
@@ -8,7 +13,7 @@ def scrape_glassdoor(job_title: str, data_frame):
     query_string = {"keyword":job_title, "location_id":"1", "location_type":"N"}
 
     headers = {
-        "X-RapidAPI-Key": "1a706ff713mshe4faa06bd345bdep11a22ejsn6107b481efa1",
+        "X-RapidAPI-Key": api_key,
         "X-RapidAPI-Host": "glassdoor.p.rapidapi.com"
     }
 
