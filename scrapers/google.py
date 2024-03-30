@@ -30,7 +30,6 @@ def scrape_google(job_title, data_frame):
     for i in range(1, num_pages):
         uri = 'https://www.google.com/about/careers/applications/jobs/results/?q="{}"&location=United+States&page={}'.format(
             og_job_title, i)
-        print(uri)
         res = requests.get(uri, headers=HEADERS)
         if res.status_code == 403:
             print('Google: Denied. Counted as a bot')

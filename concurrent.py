@@ -14,6 +14,7 @@ from scrapers import scrape_linkedin
 from scrapers import scrape_monster
 from scrapers import scrape_github
 from scrapers import scrape_google
+from scrapers import scrape_apple
 
 
 # Starts the threads for scraping the sites
@@ -26,6 +27,7 @@ def start_scrapers(job_title, data_frame):
         # 'monster': scrape_monster,
         # 'glassdoor': scrape_glassdoor,
         'google': scrape_google,
+        'apple': scrape_apple,
     }
     threads = [
         threading.Thread(target=scrapers[site], args=(job_title, data_frame))
