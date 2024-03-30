@@ -4,7 +4,7 @@ import threading
 import time
 
 # Data frame
-from scrapers import ThreadSafeDataframe
+from scrapers.utils import ThreadSafeDataframe
 
 # Scrapers
 from scrapers import scrape_usajobs
@@ -13,6 +13,7 @@ from scrapers import scrape_indeed
 from scrapers import scrape_linkedin
 from scrapers import scrape_monster
 from scrapers import scrape_github
+from scrapers import scrape_google
 
 
 # Starts the threads for scraping the sites
@@ -24,6 +25,7 @@ def start_scrapers(job_title, data_frame):
         #'linkedin': scrape_linkedin,
         # 'monster': scrape_monster,
         # 'glassdoor': scrape_glassdoor,
+        'google': scrape_google,
     }
     threads = [
         threading.Thread(target=scrapers[site], args=(job_title, data_frame))
