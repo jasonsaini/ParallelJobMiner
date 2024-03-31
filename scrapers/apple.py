@@ -13,14 +13,11 @@ def scrape_apple(job_title, data_frame):
 
     # Get the number of pages
     res_text = BeautifulSoup(res.text, 'html.parser')
-    print(uri)
-
     try:
         num_pages_string = res_text.find('h2', {'id': 'resultCount'})\
             .find('span')\
             .text\
             .strip()
-        print(num_pages_string)
 
         found_num_pages = False
         string_index = 1
@@ -35,14 +32,13 @@ def scrape_apple(job_title, data_frame):
             num_pages = math.floor(int(num_pages_string[:int(string_index)]) / 20)
         else:
             num_pages = 1
-        print(num_pages)
     except:
         num_pages = 1
         print("Apple Hates Me")
 
     # For each page, request data from that page and scrape it
 
-    for i in range(0, min(10, num_pages)):
+    for i in range(0, min(num_pages, 10)):
         uri = 'https://jobs.apple.com/en-us/search?location=united-states-USA&search={}&sort=relevance&page={}'.format(
             og_job_title, i + 1)
         res = requests.get(uri, headers=HEADERS)
@@ -52,14 +48,9 @@ def scrape_apple(job_title, data_frame):
 
         res_text = BeautifulSoup(res.text, 'html.parser')
         job_table = res_text.find('table', {'id': 'tblResultSet'})
-        listings = job_table.find_all('tbody')
-
-        # For reference later
-        # print(listings[0].find('div').find('div', {'class': "Ln1EL"}).find('div', {'class': "VfPpkd-WsjYwc"}).find('div', {'class': "sMn82b"}).find('div', {'class': "ObfsIf-oKdM2c"}).find('div', {'class': "ObfsIf-eEDwDf ObfsIf-eEDwDf-PvhD9-purZT-OiUrBf ObfsIf-eEDwDf-hJDwNd-Clt0zb"}).find('h3', {'class': "QJPWVe"}).text.strip())
+        listings = job_table.findAll('tbody')
 
         for listing in listings:
-            # job = Job()
-            # Company name
             try:
                 job_title = (
                     listing

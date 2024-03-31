@@ -15,7 +15,7 @@ from scrapers import scrape_monster
 from scrapers import scrape_github
 from scrapers import scrape_google
 from scrapers import scrape_apple
-
+from scrapers import scrape_wells_fargo
 
 # Starts the threads for scraping the sites
 def start_scrapers(job_title, data_frame):
@@ -27,7 +27,8 @@ def start_scrapers(job_title, data_frame):
         # scrape_glassdoor,
         scrape_github,
         scrape_google,
-        scrape_apple
+        scrape_apple,
+        scrape_wells_fargo,
     }
 
     for scraper in scrapers:
