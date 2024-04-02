@@ -47,10 +47,10 @@ python3 main.py "Job Title"   (ex: python3 main.py "software engineer")
 
 ## ✅ TODO
 
-- [ ] Finish scraping/querying remaining sites (Monster, Glassdoor, Indeed).
-- [ ] Investigate multi-threaded ways to append Excel data for potential performance improvements.
+- [X] Finish scraping/querying remaining sites (Monster, Glassdoor, Indeed).
+- [X] Investigate multi-threaded ways to append Excel data for potential performance improvements.
 - [ ] Implement a method to filter out duplicate positions from multiple sites.
-- [ ] Navigate and resolve API token limits (e.g., LinkedIn's 25 queries/month limit).
+- [X] Navigate and resolve API token limits (e.g., LinkedIn's 25 queries/month limit).
 - [ ] Add a legend to the spreadsheet to enable color-coded status tracking for job applications.
 - [ ] Introduce more parameters to customize the job search further.
 - [ ] Stretch Goal: Implement better UI/UX improvements.
