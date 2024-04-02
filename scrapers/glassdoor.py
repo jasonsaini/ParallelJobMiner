@@ -23,8 +23,6 @@ def scrape_glassdoor(job_title: str, data_frame):
 
     jobs = job_objects.get('hits')
 
-    print(jobs)
-
     for job_details in jobs:
         job = Job()
 

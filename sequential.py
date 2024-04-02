@@ -7,24 +7,15 @@ import time
 from scrapers.utils import ThreadSafeDataframe
 
 # Scrapers
-from scrapers import scrape_usajobs
-from scrapers import scrape_glassdoor
-from scrapers import scrape_indeed
-from scrapers import scrape_linkedin
-from scrapers import scrape_monster
-from scrapers import scrape_github
-from scrapers import scrape_google
-from scrapers import scrape_apple
-
+from scrapers import *
 
 # Starts the threads for scraping the sites
 def start_scrapers(job_title, data_frame):
     scrapers = {
         scrape_usajobs,
-        # scrape_indeed,
-        # scrape_linkedin,
-        # scrape_monster,
-        # scrape_glassdoor,
+        scrape_indeed,
+        scrape_linkedin,
+        scrape_glassdoor,
         scrape_github,
         scrape_google,
         scrape_apple

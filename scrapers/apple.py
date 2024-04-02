@@ -13,14 +13,12 @@ def scrape_apple(job_title, data_frame):
 
     # Get the number of pages
     res_text = BeautifulSoup(res.text, 'html.parser')
-    print(uri)
 
     try:
         num_pages_string = res_text.find('h2', {'id': 'resultCount'})\
             .find('span')\
             .text\
             .strip()
-        print(num_pages_string)
 
         found_num_pages = False
         string_index = 1
@@ -35,7 +33,6 @@ def scrape_apple(job_title, data_frame):
             num_pages = math.floor(int(num_pages_string[:int(string_index)]) / 20)
         else:
             num_pages = 1
-        print(num_pages)
     except:
         num_pages = 1
         print("Apple Hates Me")
