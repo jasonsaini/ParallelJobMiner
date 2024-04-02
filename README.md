@@ -5,12 +5,14 @@
 
 ## 📝 Description
 A web scraper that searches for your dream job position across major platforms:
+-  Apple
+-  Github/Simplify 
 -  Glassdoor
+-  Google
 -  Indeed
 -  LinkedIn
--  Monster
 -  USAJOBS
--  Github/Simplify 
+-  Wells Fargo
 It fetches info on available listings and the number of positions listed, making your job hunt efficient and streamlined!
 
 ---
@@ -21,7 +23,9 @@ Ensure you have python3.
 
 Clone and set up with ease:
 ```
-git clone https://github.com/jasonsaini/ParallelJobMiner.git
+git clone https://github.com/jasonsaini/ParallelJobMiner.git **or** 
+git clone git@github.com:jasonsaini/ParallelJobMiner.git
+
 cd ParallelJobMiner
 pip install -r requirements.txt
 python3 main.py "Job Title"   (ex: python3 main.py "software engineer")
