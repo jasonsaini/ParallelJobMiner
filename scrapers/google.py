@@ -22,7 +22,7 @@ def scrape_google(job_title, data_frame):
         num_pages_string = res_text.find('span', {'class': 'SWhIm'}).text.strip()
         num_pages = math.floor(int(num_pages_string) / 20)
     except:
-        num_pages = 1
+        num_pages = 0
         print("Nope")
 
     # For each page, request data from that page and scrape it

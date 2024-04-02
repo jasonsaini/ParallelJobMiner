@@ -34,7 +34,7 @@ def scrape_apple(job_title, data_frame):
         else:
             num_pages = 1
     except:
-        num_pages = 1
+        num_pages = 0
         print("Apple Hates Me")
 
     # For each page, request data from that page and scrape it

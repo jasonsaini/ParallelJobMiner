@@ -22,7 +22,7 @@ def scrape_wells_fargo(job_title, data_frame):
             .strip()
         num_pages = math.ceil(int(num_pages_string) / 20)
     except:
-        num_pages = 1
+        num_pages = 0
         print("Wells Fargo Hates Me")
 
     # For each page, request data from that page and scrape it
