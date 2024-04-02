@@ -19,6 +19,7 @@ def start_scrapers(job_title, data_frame):
         'glassdoor': scrape_glassdoor,
         'google': scrape_google,
         'apple': scrape_apple,
+        'wells_fargo': scrape_wells_fargo,
     }
     threads = [
         threading.Thread(target=scrapers[site], args=(job_title, data_frame))

@@ -18,7 +18,8 @@ def start_scrapers(job_title, data_frame):
         scrape_glassdoor,
         scrape_github,
         scrape_google,
-        scrape_apple
+        scrape_apple,
+        scrape_wells_fargo,
     }
 
     for scraper in scrapers:
