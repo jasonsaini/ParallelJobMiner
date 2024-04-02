@@ -15,6 +15,7 @@ A web scraper that searches for your dream job position across major platforms:
 -  Wells Fargo 
 
 It fetches info on available listings and the number of positions listed, making your job hunt efficient and streamlined!
+
 ---
 
 ## 🛠 Installation
