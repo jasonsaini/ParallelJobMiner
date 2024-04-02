@@ -13,8 +13,8 @@ A web scraper that searches for your dream job position across major platforms:
 -  LinkedIn
 -  USAJOBS
 -  Wells Fargo 
-It fetches info on available listings and the number of positions listed, making your job hunt efficient and streamlined!
 
+It fetches info on available listings and the number of positions listed, making your job hunt efficient and streamlined!
 ---
 
 ## 🛠 Installation
